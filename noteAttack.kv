@@ -1,0 +1,352 @@
+<MainMenu>:
+    FloatLayout:
+        canvas.before:
+            Color:
+                rgba: 189/255, 158/255, 219/255, 1
+            Rectangle:
+                size: self.size
+                pos: self.pos
+        Label:
+            text: 'Note Attack'
+            font_name: 'Assets/CourierPrime-Regular.ttf'
+            font_size: '70sp'
+            color: 95/255, 29/255, 120/255, 1
+            pos_hint: {'center_x': 0.5, 'center_y': 0.8}  
+
+        Button:
+            text: 'Start Game'
+            font_name: 'Assets/CourierPrime-Regular.ttf'
+            font_size: '30sp'
+            color: 95/255, 29/255, 120/255, 1
+            size_hint: None, None
+            width: '300sp'
+            height: '70sp'
+            pos_hint: {'center_x': 0.5, 'center_y': 0.6}  
+            on_press: root.transition_state(1)
+            background_color: 0, 0, 0, 0
+            canvas.before:
+                Color:
+                    rgba: 151/255, 104/255, 196/255, 1
+                Rectangle:
+                    size: self.size
+                    pos: self.pos
+                Color:
+                    rgba: 95/255, 29/255, 120/255, 1
+                Line:
+                    width: 3
+                    rectangle: (self.x, self.y, self.width, self.height)
+
+        Button:
+            text: 'Rules'
+            font_name: 'Assets/CourierPrime-Regular.ttf'
+            font_size: '30sp'
+            color: 95/255, 29/255, 120/255, 1
+            size_hint: None, None
+            width: '300sp'
+            height: '70sp'
+            pos_hint: {'center_x': 0.5, 'center_y': 0.45}  
+            on_press: root.transition_state(2)
+            background_color: 0, 0, 0, 0
+            canvas.before:
+                Color:
+                    rgba: 151/255, 104/255, 196/255, 1
+                Rectangle:
+                    size: self.size
+                    pos: self.pos
+                Color:
+                    rgba: 95/255, 29/255, 120/255, 1
+                Line:
+                    width: 3
+                    rectangle: (self.x, self.y, self.width, self.height)
+
+        Button:
+            text: 'Settings'
+            font_name: 'Assets/CourierPrime-Regular.ttf'
+            font_size: '30sp'
+            color: 95/255, 29/255, 120/255, 1
+            size_hint: None, None
+            width: '300sp'
+            height: '70sp'
+            pos_hint: {'center_x': 0.5, 'center_y': 0.3} 
+            on_press: root.transition_state(3)
+            background_color: 0, 0, 0, 0
+            canvas.before:
+                Color:
+                    rgba: 151/255, 104/255, 196/255, 1
+                Rectangle:
+                    size: self.size
+                    pos: self.pos
+                Color:
+                    rgba: 95/255, 29/255, 120/255, 1
+                Line:
+                    width: 3
+                    rectangle: (self.x, self.y, self.width, self.height)
+  
+        Button:
+            text: 'Leaderboard'
+            font_name: 'Assets/CourierPrime-Regular.ttf'
+            font_size: '30sp'
+            color: 95/255, 29/255, 120/255, 1
+            size_hint: None, None
+            width: '300sp'
+            height: '70sp'
+            pos_hint: {'center_x': 0.5, 'center_y': 0.15}
+            on_press: root.transition_state(4)
+            background_color: 0, 0, 0, 0
+            canvas.before:
+                Color:
+                    rgba: 151/255, 104/255, 196/255, 1
+                Rectangle:
+                    size: self.size
+                    pos: self.pos
+                Color:
+                    rgba: 95/255, 29/255, 120/255, 1
+                Line:
+                    width: 3
+                    rectangle: (self.x, self.y, self.width, self.height)
+
+<Rules>:
+    FloatLayout:
+        canvas.before:
+            Color:
+                rgba: 189/255, 158/255, 219/255, 1
+            Rectangle:
+                size: self.size
+                pos: self.pos
+        Label:
+            text: 'Rules'
+            font_name: 'Assets/CourierPrime-Regular.ttf'
+            font_size: '70sp'
+            color: 95/255, 29/255, 120/255, 1
+            pos_hint: {'center_x': 0.5, 'center_y': 0.88}  
+        Label:
+            text: "1. Set your device up near your \ninstrument.\n\n2. Click start and play the notes \nthat appear on your screen \naccordingly to shoot the enemies.\n\n3. You gain points for each enemy \nyou hit and the game ends if an \nenemy reaches you.\n\n4.Adjust your difficulty and \nchange themes in the settings."
+            font_name: 'Assets/CourierPrime-Regular.ttf'
+            font_size: '25sp'
+            color: 95/255, 29/255, 120/255, 1
+            pos_hint: {'center_x': 0.5, 'center_y': 0.52}  
+        Button:
+            text: 'Back to Menu'
+            font_name: 'Assets/CourierPrime-Regular.ttf'
+            font_size: '30sp'
+            color: 95/255, 29/255, 120/255, 1
+            size_hint: None, None
+            width: '300sp'
+            height: '70sp'
+            pos_hint: {'center_x': 0.5, 'center_y': 0.13}  
+            on_press: root.transition_state(0)
+            background_color: 0, 0, 0, 0
+            canvas.before:
+                Color:
+                    rgba: 151/255, 104/255, 196/255, 1
+                Rectangle:
+                    size: self.size
+                    pos: self.pos
+                Color:
+                    rgba: 95/255, 29/255, 120/255, 1
+                Line:
+                    width: 3
+                    rectangle: (self.x, self.y, self.width, self.height)
+
+<Settings>:
+    FloatLayout:
+        canvas.before:
+            Color:
+                rgba: 189/255, 158/255, 219/255, 1
+            Rectangle:
+                size: self.size
+                pos: self.pos
+        Button:
+            text: 'Back to Menu'
+            font_name: 'Assets/CourierPrime-Regular.ttf'
+            font_size: '30sp'
+            color: 95/255, 29/255, 120/255, 1
+            size_hint: None, None
+            width: '300sp'
+            height: '70sp'
+            pos_hint: {'center_x': 0.5, 'center_y': 0.13}  
+            on_press: root.transition_state(0)
+            background_color: 0, 0, 0, 0
+            canvas.before:
+                Color:
+                    rgba: 151/255, 104/255, 196/255, 1
+                Rectangle:
+                    size: self.size
+                    pos: self.pos
+                Color:
+                    rgba: 95/255, 29/255, 120/255, 1
+                Line:
+                    width: 3
+                    rectangle: (self.x, self.y, self.width, self.height)
+        
+        Button:
+            text: 'Hard'
+            font_name: 'Assets/CourierPrime-Regular.ttf'
+            font_size: '30sp'
+            color: 95/255, 29/255, 120/255, 1
+            size_hint: None, None
+            width: '300sp'
+            height: '70sp'
+            pos_hint: {'center_x': 0.5, 'center_y': 0.6}  
+            on_press: root.set_difficulty(2)
+            background_color: 0, 0, 0, 0
+            canvas.before:
+                Color:
+                    rgba: 151/255, 104/255, 196/255, 1
+                Rectangle:
+                    size: self.size
+                    pos: self.pos
+                Color:
+                    rgba: 95/255, 29/255, 120/255, 1
+                Line:
+                    width: 3
+                    rectangle: (self.x, self.y, self.width, self.height)
+        Button:
+            text: 'Medium'
+            font_name: 'Assets/CourierPrime-Regular.ttf'
+            font_size: '30sp'
+            color: 95/255, 29/255, 120/255, 1
+            size_hint: None, None
+            width: '300sp'
+            height: '70sp'
+            pos_hint: {'center_x': 0.5, 'center_y': 0.5} 
+            on_press: root.set_difficulty(1)
+            background_color: 0, 0, 0, 0
+            canvas.before:
+                Color:
+                    rgba: 151/255, 104/255, 196/255, 1
+                Rectangle:
+                    size: self.size
+                    pos: self.pos
+                Color:
+                    rgba: 95/255, 29/255, 120/255, 1
+                Line:
+                    width: 3
+                    rectangle: (self.x, self.y, self.width, self.height)
+        Button:
+            text: 'Easy'
+            font_name: 'Assets/CourierPrime-Regular.ttf'
+            font_size: '30sp'
+            color: 95/255, 29/255, 120/255, 1
+            size_hint: None, None
+            width: '300sp'
+            height: '70sp'
+            pos_hint: {'center_x': 0.5, 'center_y': 0.4}
+            on_press: root.set_difficulty(0)
+            background_color: 0, 0, 0, 0
+            canvas.before:
+                Color:
+                    rgba: 151/255, 104/255, 196/255, 1
+                Rectangle:
+                    size: self.size
+                    pos: self.pos
+                Color:
+                    rgba: 95/255, 29/255, 120/255, 1
+                Line:
+                    width: 3
+                    rectangle: (self.x, self.y, self.width, self.height)
+                    
+
+<Leaderboard>:
+    FloatLayout:
+        canvas.before:
+            Color:
+                rgba: 189/255, 158/255, 219/255, 1
+            Rectangle:
+                size: self.size
+                pos: self.pos
+        Button:
+            text: 'Back to Menu'
+            font_name: 'Assets/CourierPrime-Regular.ttf'
+            font_size: '30sp'
+            color: 95/255, 29/255, 120/255, 1
+            size_hint: None, None
+            width: '300sp'
+            height: '70sp'
+            pos_hint: {'center_x': 0.5, 'center_y': 0.13}  
+            on_press: root.transition_state(0)
+            background_color: 0, 0, 0, 0
+            canvas.before:
+                Color:
+                    rgba: 151/255, 104/255, 196/255, 1
+                Rectangle:
+                    size: self.size
+                    pos: self.pos
+                Color:
+                    rgba: 95/255, 29/255, 120/255, 1
+                Line:
+                    width: 3
+                    rectangle: (self.x, self.y, self.width, self.height)
+
+<GamePlay>:
+    FloatLayout:
+        canvas.before:
+            Color:
+                rgba: 189/255, 158/255, 219/255, 1
+            Rectangle:
+                size: self.size
+                pos: self.pos
+
+        Character:
+            size_hint: None, None
+            size: 100, 100
+            pos_hint: {'center_x': 0.5, 'center_y': 0.5}
+            canvas:
+                Color:
+                    rgba: 95/255, 29/255, 120/255, 11
+                Ellipse:
+                    size: self.size
+                    pos: self.pos
+                Color:
+                    rgba: 0, 0, 0, 1
+                Line:
+                    width: 3
+                    ellipse: (self.x, self.y, self.width, self.height)
+
+        Button:
+            text: 'Back to Menu'
+            font_name: 'Assets/CourierPrime-Regular.ttf'
+            font_size: '30sp'
+            color: 95/255, 29/255, 120/255, 1
+            size_hint: None, None
+            width: '300sp'
+            height: '70sp'
+            pos_hint: {'center_x': 0.65, 'center_y': 0.9}  
+            on_press: root.transition_state(0)
+            background_color: 0, 0, 0, 0
+            canvas.before:
+                Color:
+                    rgba: 151/255, 104/255, 196/255, 1
+                Rectangle:
+                    size: self.size
+                    pos: self.pos
+                Color:
+                    rgba: 95/255, 29/255, 120/255, 1
+                Line:
+                    width: 3
+                    rectangle: (self.x, self.y, self.width, self.height)
+
+<Enemies>:
+    canvas:
+        Color:
+            rgba: 1, 0, 0, 1
+        Ellipse:
+            size: self.size
+            pos: self.pos
+        Color:
+            rgba: 0, 0, 0, 1
+        Line:
+            width: 3
+            ellipse: (self.x, self.y, self.width, self.height)
+    Label:
+        text: root.note
+        font_name: 'Assets/CourierPrime-Regular.ttf'
+        size_hint: None, None
+        size: self.size
+        pos: root.pos
+        color: 1, 1, 1, 1  
+        font_size: '35sp'
+        text_size: self.size
+        halign: 'center'
+        valign: 'middle'
+            
