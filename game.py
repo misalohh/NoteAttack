@@ -2,16 +2,9 @@
 from kivy.uix.widget import Widget
 from kivy.clock import Clock
 from kivy.core.window import Window
-from enum import Enum
-from enemies import Enemies
-from laser import Laser
+from difficulty import Difficulty
 
 LEADERBOARD_SIZE = 5
-
-class Difficulty(Enum):
-    EASY = 0
-    MEDIUM = 1
-    HARD = 2
 
 class Character(Widget):
     pass
@@ -47,14 +40,15 @@ class Game:
         if self.difficulty == Difficulty.HARD:
             speed = 1
         if self.difficulty == Difficulty.MEDIUM:
-            speed = 4 
-        if self.difficulty == Difficulty.MEDIUM:
-            speed = 10
+            speed = 3
+        if self.difficulty == Difficulty.EASY:
+            speed = 6 # the duration not the interval
         else:
             speed = 3
-        self.enemy_event = Clock.schedule_interval(self.enemy_appears, speed)
+        self.enemy_event = Clock.schedule_interval(self.enemy_appears, 3)
 
     def enemy_appears(self, dt):
+        from Sprites.enemies import Enemies
         enemy = Enemies()
         self.gameplay_screen.add_widget(enemy)
         self.enemies_list.append(enemy)
@@ -67,9 +61,10 @@ class Game:
             self.enemy_event = None
     
     def create_laser(self, note):
+        from Sprites.laser import Laser
         laser = Laser(self, note)
         self.gameplay_screen.add_widget(laser)  
-        print(f"🚀 Laser added successfully: {laser}")  
+        print("Laser added successfully: {laser}")  
         Clock.schedule_once(lambda dt: laser.grow(), 0) 
 
     def check_laser_collision(self, laser):
@@ -95,16 +90,16 @@ class Game:
     def end_game(self):
         print(self.score)
         self.stop_enemies()
-        inserted = False
-        for i in range(0, min(LEADERBOARD_SIZE, len(self.leaderboards))):
-            if self.score > self.leaderboards[i]:
-                self.leaderboards[self.difficulty].insert(i, self.score)
-                inserted = True
+        #inserted = False
+        #for i in range(0, min(LEADERBOARD_SIZE, len(self.leaderboards))):
+        #    if self.score > self.leaderboards[i]:
+        #        self.leaderboards[self.difficulty].insert(i, self.score)
+        #        inserted = True
 
-        if not inserted and len(self.leaderboard) < LEADERBOARD_SIZE:
-            self.leaderboards[self.difficulty].append(self.score)
+        #if not inserted and len(self.leaderboards) < LEADERBOARD_SIZE:
+        #    self.leaderboards[self.difficulty].append(self.score)
 
-        if inserted and len(self.leaderboard) > LEADERBOARD_SIZE:
-            self.leaderboards[self.difficulty].pop()
+        #if inserted and len(self.leaderboards) > LEADERBOARD_SIZE:
+        #    self.leaderboards[self.difficulty].pop()
 
-        print(self.leaderboards)
+        #print(self.leaderboards)

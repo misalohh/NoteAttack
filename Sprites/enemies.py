@@ -34,9 +34,10 @@ class Enemies(Widget):
         animation.start(self)
 
     def on_reach(self, *args):
-        """Safely removes enemy only if it still has a parent"""
+        from game import Game
         if self.parent:
-            print(f"✅ Enemy {self} reached the center and is being removed.")
+            print('Game Over')
             self.parent.remove_widget(self)
+            self.stop_enemies()
         else:
             print(f"⚠️ Enemy {self} already removed, skipping.")

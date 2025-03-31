@@ -9,8 +9,8 @@ from kivy.app import App
 from kivy.uix.screenmanager import ScreenManager, Screen, SlideTransition
 from kivy.lang import Builder
 from kivy.core.window import Window
-from mainmenu import Leaderboard, Rules, Settings, GamePlay, MainMenu
-from ingame import Game
+from menus import Leaderboard, Rules, Settings, GamePlay, MainMenu, Customisation
+from game import Game
 
 class GameState(Enum):
     MENU = 0
@@ -18,6 +18,7 @@ class GameState(Enum):
     RULES = 2
     SETTINGS = 3
     LEADERBOARD = 4
+    CUSTOMISATION = 5
 
 class NoteAttack(App):
     def build(self):
@@ -48,6 +49,11 @@ class NoteAttack(App):
         self.screen_manager.add_widget(lb)
         lb.add_widget(Leaderboard(self.screen_manager, self.transition_state)) 
 
+        cm = Screen(name='Customisation')
+        self.screen_manager.add_widget(cm)
+        cm.add_widget(Customisation(self.screen_manager, self.transition_state)) 
+ 
+
         self.screen_manager.current = 'MainMenu'
 
         return self.screen_manager
@@ -60,6 +66,8 @@ class NoteAttack(App):
         newState = GameState(newState)
         print("transitioning game state " + str(self.current_state) + " -> " + str(newState))
         if self.current_state == GameState.MENU:
+            self.screen_manager.transition = SlideTransition(direction='left')
+        elif newState == GameState.CUSTOMISATION:
             self.screen_manager.transition = SlideTransition(direction='left')
         else:
             self.screen_manager.transition = SlideTransition(direction='right')
@@ -77,6 +85,8 @@ class NoteAttack(App):
             self.screen_manager.current = 'Settings'
         elif newState == GameState.LEADERBOARD:
             self.screen_manager.current = 'Leaderboard'
+        elif newState == GameState.CUSTOMISATION:
+            self.screen_manager.current = 'Customisation'
         else:
             self.screen_manager.current = 'Rules'
 
