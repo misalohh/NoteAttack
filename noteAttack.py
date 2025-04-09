@@ -9,7 +9,8 @@ from kivy.app import App
 from kivy.uix.screenmanager import ScreenManager, Screen, SlideTransition
 from kivy.lang import Builder
 from kivy.core.window import Window
-from menus import Leaderboard, Rules, Settings, GamePlay, MainMenu, Customisation
+from menus import *
+from leaderboard import Leaderboard
 from game import Game
 
 class GameState(Enum):
@@ -25,6 +26,10 @@ class NoteAttack(App):
         Window.bind(on_key_down=self.handle_input)
 
         self.current_state = GameState.MENU
+        self.leaderboard = Leaderboard()
+        self.leaderboard.load()
+
+        #move to its own function (sm stuff)
         self.screen_manager = ScreenManager()
 
         mm = Screen(name='MainMenu')
@@ -45,14 +50,13 @@ class NoteAttack(App):
         self.settings_screen = Settings(self.screen_manager, self.transition_state)
         settings.add_widget(self.settings_screen)
 
-        lb = Screen(name='Leaderboard')
+        lb = Screen(name='LeaderboardScreen')
         self.screen_manager.add_widget(lb)
-        lb.add_widget(Leaderboard(self.screen_manager, self.transition_state)) 
+        lb.add_widget(LeaderboardScreen(self.screen_manager, self.transition_state, self.leaderboard)) 
 
         cm = Screen(name='Customisation')
         self.screen_manager.add_widget(cm)
-        cm.add_widget(Customisation(self.screen_manager, self.transition_state)) 
- 
+        cm.add_widget(Customisation(self.screen_manager, self.transition_state, self.gameplay_screen)) 
 
         self.screen_manager.current = 'MainMenu'
 
@@ -73,18 +77,19 @@ class NoteAttack(App):
             self.screen_manager.transition = SlideTransition(direction='right')
         
         if self.current_state == GameState.GAMEPLAY:
-            self.current_game.end_game()
+            #self.current_game.end_game() #call end game only once
+            self.leaderboard.save()
 
         if newState == GameState.MENU:
             self.screen_manager.current = 'MainMenu'
             pass
         elif newState == GameState.GAMEPLAY:
             self.screen_manager.current = 'GamePlay'
-            self.current_game = Game(self.gameplay_screen, self.settings_screen.difficulty)
+            self.current_game = Game(self.gameplay_screen, self.leaderboard, self.settings_screen.difficulty)
         elif newState == GameState.SETTINGS:
             self.screen_manager.current = 'Settings'
         elif newState == GameState.LEADERBOARD:
-            self.screen_manager.current = 'Leaderboard'
+            self.screen_manager.current = 'LeaderboardScreen'
         elif newState == GameState.CUSTOMISATION:
             self.screen_manager.current = 'Customisation'
         else:

@@ -3,20 +3,20 @@ from kivy.uix.widget import Widget
 from kivy.clock import Clock
 from kivy.core.window import Window
 from difficulty import Difficulty
-
-LEADERBOARD_SIZE = 5
+from leaderboard import Leaderboard
 
 class Character(Widget):
     pass
 
 class Game:
-    def __init__(self, gameplay_screen, difficulty):
+    def __init__(self, gameplay_screen, leaderboard, difficulty):
+        self.leaderboard = leaderboard
         self.difficulty = difficulty
         self.enemies_list = []
         self.score = 0
+        self.is_game_over = False
         self.start_enemies()
         self.gameplay_screen = gameplay_screen
-        self.leaderboards = [[], [], []] # easy, medium, hard leaderboard
         print("starting new " + str(difficulty) + " game!")
 
     def handle_gameplay_input(self, key):
@@ -49,7 +49,7 @@ class Game:
 
     def enemy_appears(self, dt):
         from Sprites.enemies import Enemies
-        enemy = Enemies(game_instance=self)
+        enemy = Enemies(self)
         self.gameplay_screen.add_widget(enemy)
         self.enemies_list.append(enemy)
         enemy.move_to_centre()
@@ -87,19 +87,13 @@ class Game:
             self.gameplay_screen.remove_widget(enemy)
             self.enemies_list.remove(enemy) 
 
+
     def end_game(self):
+        if self.is_game_over:
+            return
+        print('Game over')
+        self.leaderboard.add_score(self.score, self.difficulty)
         print(self.score)
         self.stop_enemies()
-        inserted = False
-        for i in range(0, min(LEADERBOARD_SIZE, len(self.leaderboards))):
-            if self.score > self.leaderboards[i]:
-                self.leaderboards[self.difficulty].insert(i, self.score)
-                inserted = True
-
-        if not inserted and len(self.leaderboards) < LEADERBOARD_SIZE:
-            self.leaderboards[self.difficulty].append(self.score)
-
-        if inserted and len(self.leaderboards) > LEADERBOARD_SIZE:
-            self.leaderboards[self.difficulty].pop()
-
-        print(self.leaderboards)
+        self.is_game_over = True
+        

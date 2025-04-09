@@ -284,8 +284,10 @@
             font_size: '50sp'
             color: 95/255, 29/255, 120/255, 1
             pos_hint: {'center_x': 0.5, 'center_y': 0.8} 
+
         Spinner:
             text: 'Themes'
+            on_text: root.on_spinner(self, self.text)
             values: ['Pink', 'Blue', 'Red', 'Orange', 'Green', 'Outer Space']
             font_name: 'Assets/CourierPrime-Regular.ttf'
             font_size: '35sp'
@@ -307,7 +309,6 @@
                     width: 3
                     rectangle: (self.x, self.y, self.width, self.height)
             option_cls: 'CustomSpinnerOption'
-
 
         Spinner:
             text: 'Skins'
@@ -373,7 +374,7 @@
             width: 3
             rectangle: (self.x, self.y, self.width, self.height)
 
-<Leaderboard>:
+<LeaderboardScreen>:
     FloatLayout:
         canvas.before:
             Color:
@@ -410,7 +411,7 @@
             color: 95/255, 29/255, 120/255, 1
             pos_hint: {'center_x': 0.44, 'center_y': 0.92}  
         Label:
-            text: "1:\n2:\n3:\n4:\n5:"
+            text: root.get_leaderboard_text(0)
             font_name: 'Assets/CourierPrime-Regular.ttf'
             font_size: '25sp'
             color: 95/255, 29/255, 120/255, 1
@@ -444,7 +445,7 @@
     FloatLayout:
         canvas.before:
             Color:
-                rgba: 189/255, 158/255, 219/255, 1
+                rgba: root.background_colour
             Rectangle:
                 size: self.size
                 pos: self.pos
@@ -522,4 +523,6 @@
         text_size: self.size
         halign: 'center'
         valign: 'middle'
+
+
             
