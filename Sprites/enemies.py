@@ -1,6 +1,7 @@
 from kivy.core.window import Window
 from kivy.uix.widget import Widget
 from kivy.animation import Animation
+from game import Game
 from kivy.properties import StringProperty
 import random
 
@@ -8,7 +9,7 @@ Notes = ['A', 'B', 'C', 'D', 'E', 'F', 'G']
 
 class Enemies(Widget):
     note = StringProperty('A')
-    def __init__(self, **kwargs):
+    def __init__(self, game_instance, **kwargs):
         super(Enemies, self).__init__(**kwargs)
         self.size_hint = (None, None)
         self.size = (100, 100)
@@ -34,10 +35,9 @@ class Enemies(Widget):
         animation.start(self)
 
     def on_reach(self, *args):
-        from game import Game
         if self.parent:
             print('Game Over')
             self.parent.remove_widget(self)
-            self.stop_enemies()
+            # stop enemies here called form game.py file
         else:
             print(f"⚠️ Enemy {self} already removed, skipping.")

@@ -11,13 +11,13 @@ class Laser(Widget):
         self.game = game
         self.note = note
         with self.canvas:
-            Color(0, 0, 0, 1)  # Red laser color
+            Color(0, 0, 0, 1)  
             self.circle = Line(circle=(Window.width / 2, Window.height / 2, 0), width=2)
 
     def grow(self):
         animation = Animation(radius=950, duration=1)  
         animation.bind(on_progress=self.update_circle)
-        animation.bind(on_complete=self.schedule_destroy)  # NEW: Delay removal
+        animation.bind(on_complete=self.schedule_destroy)  
         animation.start(self)
 
     def update_circle(self, *args):
@@ -25,11 +25,10 @@ class Laser(Widget):
         self.circle.circle = (Window.width / 2, Window.height / 2, self.radius)
 
     def schedule_destroy(self, *args):
-        """Ensures the widget is removed only if it's still inside the parent."""
-        Clock.schedule_once(self.destroy, 0.1)  # Delay ensures `self.parent` isn't None
+        Clock.schedule_once(self.destroy, 0.1)  
 
     def destroy(self, *args):
         if self.parent:
             self.parent.remove_widget(self)
         else:
-            print("⚠️ Laser parent is None, skipping removal to prevent crash ⚠️")
+            print("Laser parent is None, skipping removal to prevent crashs")

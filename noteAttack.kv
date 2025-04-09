@@ -16,7 +16,7 @@
         Button:
             text: 'Start Game'
             font_name: 'Assets/CourierPrime-Regular.ttf'
-            font_size: '30sp'
+            font_size: '31sp'
             color: 95/255, 29/255, 120/255, 1
             size_hint: None, None
             width: '300sp'
@@ -286,7 +286,7 @@
             pos_hint: {'center_x': 0.5, 'center_y': 0.8} 
         Spinner:
             text: 'Themes'
-            values: ['Option 1', 'Option 2', 'Option 3']
+            values: ['Pink', 'Blue', 'Red', 'Orange', 'Green', 'Outer Space']
             font_name: 'Assets/CourierPrime-Regular.ttf'
             font_size: '35sp'
             color: 95/255, 29/255, 120/255, 1
@@ -294,10 +294,10 @@
             height: '70sp'
             size_hint: None, None
             pos_hint: {'center_x': 0.5, 'center_y': 0.6}
-            background_color: 1, 1, 1, 1
+            background_color: 0,0,0,0
             canvas.before:
                 Color:
-                    rgba: 1, 1, 1, 1
+                    rgba: 151/255, 104/255, 196/255, 1
                 Rectangle:
                     size: self.size
                     pos: self.pos
@@ -306,9 +306,12 @@
                 Line:
                     width: 3
                     rectangle: (self.x, self.y, self.width, self.height)
+            option_cls: 'CustomSpinnerOption'
+
+
         Spinner:
             text: 'Skins'
-            values: ['Option 1', 'Option 2', 'Option 3']
+            values: ['Pink', 'Blue', 'Red', 'Orange', 'Green', 'Mars']
             font_name: 'Assets/CourierPrime-Regular.ttf'
             font_size: '35sp'
             color: 95/255, 29/255, 120/255, 1
@@ -316,10 +319,10 @@
             height: '70sp'
             size_hint: None, None
             pos_hint: {'center_x': 0.5, 'center_y': 0.4}
-            background_color: 1,1,1, 1
+            background_color: 0,0,0,0
             canvas.before:
                 Color:
-                    rgba: 1, 1, 1, 1
+                    rgba: 151/255, 104/255, 196/255, 1
                 Rectangle:
                     size: self.size
                     pos: self.pos
@@ -328,6 +331,8 @@
                 Line:
                     width: 3
                     rectangle: (self.x, self.y, self.width, self.height)
+            option_cls: 'CustomSpinnerOption'
+
         Button:
             text: 'Back to Menu'
             font_name: 'Assets/CourierPrime-Regular.ttf'
@@ -351,6 +356,22 @@
                     width: 3
                     rectangle: (self.x, self.y, self.width, self.height)
                     
+<CustomSpinnerOption@SpinnerOption>:
+    font_name: 'Assets/CourierPrime-Regular.ttf'
+    font_size: '30sp'
+    color: 95/255, 29/255, 120/255, 1
+    background_color: 0, 0, 0, 0
+    canvas.before:
+        Color:
+            rgba: 146/255, 125/255, 168/255, 1
+        Rectangle:
+            size: self.size
+            pos: self.pos
+        Color:
+            rgba: 95/255, 29/255, 120/255, 1
+        Line:
+            width: 3
+            rectangle: (self.x, self.y, self.width, self.height)
 
 <Leaderboard>:
     FloatLayout:
@@ -466,6 +487,17 @@
                 Line:
                     width: 3
                     rectangle: (self.x, self.y, self.width, self.height)
+
+        Label:
+            text: 'score: ' + root.score
+            font_name: 'Assets/CourierPrime-Regular.ttf'
+            font_size: '30sp'
+            color: 95/255, 29/255, 120/255, 1
+            size_hint: None, None
+            width: '300sp'
+            height: '70sp'
+            pos_hint: {'center_x': 0.2, 'center_y': 0.05}  
+
 
 <Enemies>:
     canvas:

@@ -45,11 +45,11 @@ class Game:
             speed = 6 # the duration not the interval
         else:
             speed = 3
-        self.enemy_event = Clock.schedule_interval(self.enemy_appears, 3)
+        self.enemy_event = Clock.schedule_interval(self.enemy_appears, speed)
 
     def enemy_appears(self, dt):
         from Sprites.enemies import Enemies
-        enemy = Enemies()
+        enemy = Enemies(game_instance=self)
         self.gameplay_screen.add_widget(enemy)
         self.enemies_list.append(enemy)
         enemy.move_to_centre()
@@ -90,16 +90,16 @@ class Game:
     def end_game(self):
         print(self.score)
         self.stop_enemies()
-        #inserted = False
-        #for i in range(0, min(LEADERBOARD_SIZE, len(self.leaderboards))):
-        #    if self.score > self.leaderboards[i]:
-        #        self.leaderboards[self.difficulty].insert(i, self.score)
-        #        inserted = True
+        inserted = False
+        for i in range(0, min(LEADERBOARD_SIZE, len(self.leaderboards))):
+            if self.score > self.leaderboards[i]:
+                self.leaderboards[self.difficulty].insert(i, self.score)
+                inserted = True
 
-        #if not inserted and len(self.leaderboards) < LEADERBOARD_SIZE:
-        #    self.leaderboards[self.difficulty].append(self.score)
+        if not inserted and len(self.leaderboards) < LEADERBOARD_SIZE:
+            self.leaderboards[self.difficulty].append(self.score)
 
-        #if inserted and len(self.leaderboards) > LEADERBOARD_SIZE:
-        #    self.leaderboards[self.difficulty].pop()
+        if inserted and len(self.leaderboards) > LEADERBOARD_SIZE:
+            self.leaderboards[self.difficulty].pop()
 
-        #print(self.leaderboards)
+        print(self.leaderboards)
