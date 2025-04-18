@@ -9,6 +9,7 @@ from kivy.app import App
 from kivy.uix.screenmanager import ScreenManager, Screen, SlideTransition
 from kivy.lang import Builder
 from kivy.core.window import Window
+from kivy.clock import Clock
 from menus import *
 from leaderboard import Leaderboard
 from game import Game
@@ -24,6 +25,7 @@ class GameState(Enum):
 class NoteAttack(App):
     def build(self):
         Window.bind(on_key_down=self.handle_input)
+        Clock.schedule_interval(lambda dt: print("fps: " + str(Clock.get_fps())), 2)
 
         self.current_state = GameState.MENU
         self.leaderboard = Leaderboard()
@@ -52,11 +54,13 @@ class NoteAttack(App):
 
         lb = Screen(name='LeaderboardScreen')
         self.screen_manager.add_widget(lb)
-        lb.add_widget(LeaderboardScreen(self.screen_manager, self.transition_state, self.leaderboard)) 
+        self.leaderboard_screen = LeaderboardScreen(self.screen_manager, self.transition_state, self.leaderboard)
+        lb.add_widget(self.leaderboard_screen) 
 
         cm = Screen(name='Customisation')
         self.screen_manager.add_widget(cm)
-        cm.add_widget(Customisation(self.screen_manager, self.transition_state, self.gameplay_screen)) 
+        self.customisation_screen = Customisation(self.screen_manager, self.transition_state, self.gameplay_screen, self.leaderboard)
+        cm.add_widget(self.customisation_screen) 
 
         self.screen_manager.current = 'MainMenu'
 
@@ -77,7 +81,7 @@ class NoteAttack(App):
             self.screen_manager.transition = SlideTransition(direction='right')
         
         if self.current_state == GameState.GAMEPLAY:
-            #self.current_game.end_game() #call end game only once
+            self.current_game.end_game()
             self.leaderboard.save()
 
         if newState == GameState.MENU:
@@ -89,8 +93,11 @@ class NoteAttack(App):
         elif newState == GameState.SETTINGS:
             self.screen_manager.current = 'Settings'
         elif newState == GameState.LEADERBOARD:
+            self.leaderboard_screen.update_text()
             self.screen_manager.current = 'LeaderboardScreen'
         elif newState == GameState.CUSTOMISATION:
+            self.customisation_screen.update_score()
+            self.customisation_screen.update_options()
             self.screen_manager.current = 'Customisation'
         else:
             self.screen_manager.current = 'Rules'

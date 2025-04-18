@@ -285,10 +285,17 @@
             color: 95/255, 29/255, 120/255, 1
             pos_hint: {'center_x': 0.5, 'center_y': 0.8} 
 
+        Label:
+            text: root.score_text 
+            font_name: 'Assets/CourierPrime-Regular.ttf'
+            font_size: '25sp'
+            color: 95/255, 29/255, 120/255, 1
+            pos_hint: {'center_x': 0.2, 'center_y': 0.9} 
+
         Spinner:
             text: 'Themes'
-            on_text: root.on_spinner(self, self.text)
-            values: ['Pink', 'Blue', 'Red', 'Orange', 'Green', 'Outer Space']
+            on_text: root.on_theme_spinner(self.text)
+            values: root.theme_options
             font_name: 'Assets/CourierPrime-Regular.ttf'
             font_size: '35sp'
             color: 95/255, 29/255, 120/255, 1
@@ -312,7 +319,8 @@
 
         Spinner:
             text: 'Skins'
-            values: ['Pink', 'Blue', 'Red', 'Orange', 'Green', 'Mars']
+            on_text: root.on_skin_spinner(self.text)
+            values: root.skin_options
             font_name: 'Assets/CourierPrime-Regular.ttf'
             font_size: '35sp'
             color: 95/255, 29/255, 120/255, 1
@@ -411,7 +419,7 @@
             color: 95/255, 29/255, 120/255, 1
             pos_hint: {'center_x': 0.44, 'center_y': 0.92}  
         Label:
-            text: root.get_leaderboard_text(0)
+            text: root.easy_text
             font_name: 'Assets/CourierPrime-Regular.ttf'
             font_size: '25sp'
             color: 95/255, 29/255, 120/255, 1
@@ -423,7 +431,7 @@
             color: 95/255, 29/255, 120/255, 1
             pos_hint: {'center_x': 0.47, 'center_y': 0.67} 
         Label:
-            text: "1:\n2:\n3:\n4:\n5:"
+            text: root.medium_text
             font_name: 'Assets/CourierPrime-Regular.ttf'
             font_size: '25sp'
             color: 95/255, 29/255, 120/255, 1
@@ -435,7 +443,7 @@
             color: 95/255, 29/255, 120/255, 1
             pos_hint: {'center_x': 0.44, 'center_y': 0.42} 
         Label:
-            text: "1:\n2:\n3:\n4:\n5:"
+            text: root.hard_text
             font_name: 'Assets/CourierPrime-Regular.ttf'
             font_size: '25sp'
             color: 95/255, 29/255, 120/255, 1
@@ -456,12 +464,12 @@
             pos_hint: {'center_x': 0.5, 'center_y': 0.5}
             canvas:
                 Color:
-                    rgba: 95/255, 29/255, 120/255, 11
+                    rgba: root.skin_colour
                 Ellipse:
                     size: self.size
                     pos: self.pos
                 Color:
-                    rgba: 0, 0, 0, 1
+                    rgba: root.character_line_colour
                 Line:
                     width: 3
                     ellipse: (self.x, self.y, self.width, self.height)
@@ -470,7 +478,7 @@
             text: 'Back to Menu'
             font_name: 'Assets/CourierPrime-Regular.ttf'
             font_size: '30sp'
-            color: 95/255, 29/255, 120/255, 1
+            color: root.line_colour
             size_hint: None, None
             width: '300sp'
             height: '70sp'
@@ -479,12 +487,12 @@
             background_color: 0, 0, 0, 0
             canvas.before:
                 Color:
-                    rgba: 151/255, 104/255, 196/255, 1
+                    rgba: root.button_colour
                 Rectangle:
                     size: self.size
                     pos: self.pos
                 Color:
-                    rgba: 95/255, 29/255, 120/255, 1
+                    rgba: root.line_colour
                 Line:
                     width: 3
                     rectangle: (self.x, self.y, self.width, self.height)
@@ -493,7 +501,7 @@
             text: 'score: ' + root.score
             font_name: 'Assets/CourierPrime-Regular.ttf'
             font_size: '30sp'
-            color: 95/255, 29/255, 120/255, 1
+            color: root.line_colour
             size_hint: None, None
             width: '300sp'
             height: '70sp'
@@ -503,7 +511,7 @@
 <Enemies>:
     canvas:
         Color:
-            rgba: 1, 0, 0, 1
+            rgba: 186/255, 15/255, 21/255, 1
         Ellipse:
             size: self.size
             pos: self.pos

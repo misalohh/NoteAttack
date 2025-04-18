@@ -28,16 +28,17 @@ class Enemies(Widget):
         elif side == 'bottom':
             self.pos = (random.uniform(0, Window.width), -self.height)
 
-    def move_to_centre(self):
-        centre_x =(Window.width / 2 - self.width / 2)
-        centre_y = (Window.height / 2 - self.height / 2)
-        animation = Animation(x=centre_x, y= centre_y, duration= 3)
+    def move_to_centre(self, speed):
+        centre_x = (Window.width / 2) - (self.width / 2)
+        centre_y = (Window.height / 2) - (self.height / 2)
+        animation = Animation(x = centre_x, y = centre_y, duration = speed)
         animation.bind(on_complete=self.on_reach)
         animation.start(self)
 
     def on_reach(self, *args):
         if self.parent:
             self.parent.remove_widget(self)
+            self.game_instance.enemies_list.remove(self)
             self.game_instance.end_game()
         else:
             print("Enemy already removed, skipping.")

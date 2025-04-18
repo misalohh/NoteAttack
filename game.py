@@ -3,7 +3,14 @@ from kivy.uix.widget import Widget
 from kivy.clock import Clock
 from kivy.core.window import Window
 from difficulty import Difficulty
-from leaderboard import Leaderboard
+
+DIFFICULTY_TO_SPEED = {
+    Difficulty.EASY: 5,
+    Difficulty.MEDIUM: 3,
+    Difficulty.HARD: 1
+}
+
+LASER_TIMEOUT_MS = 500
 
 class Character(Widget):
     pass
@@ -17,10 +24,14 @@ class Game:
         self.is_game_over = False
         self.start_enemies()
         self.gameplay_screen = gameplay_screen
+        self.gameplay_screen.reset_score()
+        self.speed = DIFFICULTY_TO_SPEED[difficulty]
+        self.last_laser_time = 0
         print("starting new " + str(difficulty) + " game!")
 
     def handle_gameplay_input(self, key):
-        if key == 97:
+        # todo: use ord for all keys
+        if key == ord('a'):
             self.create_laser('A')
         elif key == 98:
             self.create_laser('B')
@@ -34,25 +45,27 @@ class Game:
             self.create_laser('F')
         elif key == 103:
             self.create_laser('G')
+        # for testing
+        # elif key == ord('1'):
+        #     self.score += 10
+        #     self.gameplay_screen.update_score(self.score)
+
 
     def start_enemies(self):
         print("Starting enemy appearance")
-        if self.difficulty == Difficulty.HARD:
-            speed = 1
-        if self.difficulty == Difficulty.MEDIUM:
-            speed = 3
-        if self.difficulty == Difficulty.EASY:
-            speed = 6 # the duration not the interval
-        else:
-            speed = 3
-        self.enemy_event = Clock.schedule_interval(self.enemy_appears, speed)
+        self.enemy_event = Clock.schedule_interval(self.enemy_appears, 3)
 
     def enemy_appears(self, dt):
         from Sprites.enemies import Enemies
+
+        if self.is_game_over:
+            return
+
+        print("adding enemy")
         enemy = Enemies(self)
         self.gameplay_screen.add_widget(enemy)
         self.enemies_list.append(enemy)
-        enemy.move_to_centre()
+        enemy.move_to_centre(self.speed)
 
     def stop_enemies(self):
         print("Stopping enemy appearance")
@@ -62,6 +75,16 @@ class Game:
     
     def create_laser(self, note):
         from Sprites.laser import Laser
+
+        # don't spawn laser before timeout
+        t = Clock.get_time()
+        delta_ms = (t - self.last_laser_time) * 1000.
+        if delta_ms < LASER_TIMEOUT_MS:
+            print("timeout")
+            return
+
+        self.last_laser_time = t
+
         laser = Laser(self, note)
         self.gameplay_screen.add_widget(laser)  
         print("Laser added successfully: {laser}")  
@@ -83,17 +106,29 @@ class Game:
                 to_remove.append(enemy)
 
         for enemy in to_remove:
-            self.score += 1
+            self.increase_score()
             self.gameplay_screen.remove_widget(enemy)
             self.enemies_list.remove(enemy) 
 
-
+    def increase_score(self):
+        self.score += 1
+        self.gameplay_screen.update_score(self.score)
+    
     def end_game(self):
+        self.stop_enemies()
+
+        # remove remaining enemies
+        for enemy in self.enemies_list:
+            print("removing enemy, game over")
+            self.gameplay_screen.remove_widget(enemy)
+            self.enemies_list.remove(enemy) 
+
         if self.is_game_over:
             return
+        
+        self.is_game_over = True
         print('Game over')
         self.leaderboard.add_score(self.score, self.difficulty)
+        print('score: ' + str(self.score))
+        print(str(self.difficulty) + ' leaderboard: ' + str(self.leaderboard.get(self.difficulty)))
         print(self.score)
-        self.stop_enemies()
-        self.is_game_over = True
-        
