@@ -5,9 +5,9 @@ from kivy.core.window import Window
 from difficulty import Difficulty
 
 DIFFICULTY_TO_SPEED = {
-    Difficulty.EASY: 5,
-    Difficulty.MEDIUM: 3,
-    Difficulty.HARD: 1
+    Difficulty.EASY: 6,
+    Difficulty.MEDIUM: 4,
+    Difficulty.HARD: 2
 }
 
 LASER_TIMEOUT_MS = 500
@@ -29,31 +29,40 @@ class Game:
         self.last_laser_time = 0
         print("starting new " + str(difficulty) + " game!")
 
+    def get_current_difficulty(self):
+        return self.difficulty
+
     def handle_gameplay_input(self, key):
-        # todo: use ord for all keys
         if key == ord('a'):
             self.create_laser('A')
-        elif key == 98:
+        elif key == ord('b'):
             self.create_laser('B')
-        elif key == 99:
+        elif key == ord('c'):
             self.create_laser('C')
-        elif key == 100:
+        elif key == ord('d'):
             self.create_laser('D')
-        elif key == 101:
+        elif key == ord('e'):
             self.create_laser('E')
-        elif key == 102:
+        elif key == ord('f'):
             self.create_laser('F')
-        elif key == 103:
+        elif key == ord('g'):
             self.create_laser('G')
-        # for testing
-        # elif key == ord('1'):
-        #     self.score += 10
-        #     self.gameplay_screen.update_score(self.score)
+        #for testing
+        elif key == ord('1'):
+            self.score += 10
+            self.gameplay_screen.update_score(self.score)
 
 
     def start_enemies(self):
         print("Starting enemy appearance")
-        self.enemy_event = Clock.schedule_interval(self.enemy_appears, 3)
+        if self.difficulty == Difficulty.HARD:
+            speed = 2
+        if self.difficulty == Difficulty.MEDIUM:
+            speed = 4
+        elif self.difficulty == Difficulty.EASY:
+            speed = 6
+
+        self.enemy_event = Clock.schedule_interval(self.enemy_appears, speed)
 
     def enemy_appears(self, dt):
         from Sprites.enemies import Enemies
@@ -114,8 +123,12 @@ class Game:
         self.score += 1
         self.gameplay_screen.update_score(self.score)
     
+    def game_over_message(self, *args):
+        self.gameplay_screen.game_over_color = [1, 0, 0, 1]
+
     def end_game(self):
         self.stop_enemies()
+        Clock.schedule_once(self.game_over_message, 0.3)
 
         # remove remaining enemies
         for enemy in self.enemies_list:
@@ -127,7 +140,6 @@ class Game:
             return
         
         self.is_game_over = True
-        print('Game over')
         self.leaderboard.add_score(self.score, self.difficulty)
         print('score: ' + str(self.score))
         print(str(self.difficulty) + ' leaderboard: ' + str(self.leaderboard.get(self.difficulty)))

@@ -3,18 +3,27 @@ from kivy.uix.widget import Widget
 from game import Game
 from kivy.animation import Animation
 from kivy.properties import StringProperty
+from difficulty import Difficulty
 import random
 
-Notes = ['A', 'B', 'C', 'D', 'E', 'F', 'G']
-
+NOTES_MAP = {
+    Difficulty.EASY: ['A', 'B', 'C', 'D', 'E', 'F', 'G'],
+    Difficulty.MEDIUM: ['A', 'A#', 'B','B#', 'C', 'C#', 'D', 'D#', 'E', 'E#', 'F', 'F#', 'G', 'G#'],
+    Difficulty.HARD: ['A', 'A#', 'B','B#', 'C', 'C#', 'D', 'D#', 'E', 'E#', 'F', 'F#', 'G', 'G#', 'Ab', 'Bb', 'Cb', 'Db', 'Eb', 'Fb', 'Gb']
+}
 class Enemies(Widget):
     note = StringProperty('A')
+
+    def get_difficulty(self):
+        return self.game_instance.get_current_difficulty()
+    
     def __init__(self, game_instance, **kwargs):
         super(Enemies, self).__init__(**kwargs)
         self.game_instance = game_instance
+        self.difficulty = self.get_difficulty()
         self.size_hint = (None, None)
         self.size = (100, 100)
-        self.note = random.choice(Notes)
+        self.note = random.choice(NOTES_MAP[self.difficulty])
         self.set_random_offscreen()
 
     def set_random_offscreen(self):

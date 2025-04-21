@@ -34,22 +34,22 @@ class NoteAttack(App):
         #move to its own function (sm stuff)
         self.screen_manager = ScreenManager()
 
-        mm = Screen(name='MainMenu')
+        mm = Screen(name='MainMenuScreen')
         self.screen_manager.add_widget(mm)
-        mm.add_widget(MainMenu(self.screen_manager, self.transition_state))
+        mm.add_widget(MainMenuScreen(self.screen_manager, self.transition_state))
 
-        gp = Screen(name='GamePlay')
+        gp = Screen(name='GamePlayScreen')
         self.screen_manager.add_widget(gp)
-        self.gameplay_screen = GamePlay(self.screen_manager, self.transition_state)
+        self.gameplay_screen = GamePlayScreen(self.screen_manager, self.transition_state)
         gp.add_widget(self.gameplay_screen)
 
-        rules = Screen(name='Rules')
+        rules = Screen(name='RulesScreen')
         self.screen_manager.add_widget(rules)
-        rules.add_widget(Rules(self.screen_manager, self.transition_state))
+        rules.add_widget(RulesScreen(self.screen_manager, self.transition_state))
 
-        settings = Screen(name='Settings')
+        settings = Screen(name='SettingsScreen')
         self.screen_manager.add_widget(settings)
-        self.settings_screen = Settings(self.screen_manager, self.transition_state)
+        self.settings_screen = SettingsScreen(self.screen_manager, self.transition_state)
         settings.add_widget(self.settings_screen)
 
         lb = Screen(name='LeaderboardScreen')
@@ -57,12 +57,12 @@ class NoteAttack(App):
         self.leaderboard_screen = LeaderboardScreen(self.screen_manager, self.transition_state, self.leaderboard)
         lb.add_widget(self.leaderboard_screen) 
 
-        cm = Screen(name='Customisation')
+        cm = Screen(name='CustomisationScreen')
         self.screen_manager.add_widget(cm)
-        self.customisation_screen = Customisation(self.screen_manager, self.transition_state, self.gameplay_screen, self.leaderboard)
+        self.customisation_screen = CustomisationScreen(self.screen_manager, self.transition_state, self.gameplay_screen, self.leaderboard)
         cm.add_widget(self.customisation_screen) 
 
-        self.screen_manager.current = 'MainMenu'
+        self.screen_manager.current = 'MainMenuScreen'
 
         return self.screen_manager
 
@@ -82,25 +82,25 @@ class NoteAttack(App):
         
         if self.current_state == GameState.GAMEPLAY:
             self.current_game.end_game()
-            self.leaderboard.save()
 
         if newState == GameState.MENU:
-            self.screen_manager.current = 'MainMenu'
+            self.screen_manager.current = 'MainMenuScreen'
             pass
         elif newState == GameState.GAMEPLAY:
-            self.screen_manager.current = 'GamePlay'
+            self.screen_manager.current = 'GamePlayScreen'
             self.current_game = Game(self.gameplay_screen, self.leaderboard, self.settings_screen.difficulty)
+            self.gameplay_screen.game_over_color = [0, 0, 0, 0]
         elif newState == GameState.SETTINGS:
-            self.screen_manager.current = 'Settings'
+            self.screen_manager.current = 'SettingsScreen'
         elif newState == GameState.LEADERBOARD:
             self.leaderboard_screen.update_text()
             self.screen_manager.current = 'LeaderboardScreen'
         elif newState == GameState.CUSTOMISATION:
             self.customisation_screen.update_score()
             self.customisation_screen.update_options()
-            self.screen_manager.current = 'Customisation'
+            self.screen_manager.current = 'CustomisationScreen'
         else:
-            self.screen_manager.current = 'Rules'
+            self.screen_manager.current = 'RulesScreen'
 
         self.current_state = newState
 

@@ -1,4 +1,4 @@
-<MainMenu>:
+<MainMenuScreen>:
     FloatLayout:
         canvas.before:
             Color:
@@ -105,7 +105,7 @@
                     width: 3
                     rectangle: (self.x, self.y, self.width, self.height)
 
-<Rules>:
+<RulesScreen>:
     FloatLayout:
         canvas.before:
             Color:
@@ -148,7 +148,7 @@
                     width: 3
                     rectangle: (self.x, self.y, self.width, self.height)
 
-<Settings>:
+<SettingsScreen>:
     FloatLayout:
         canvas.before:
             Color:
@@ -211,7 +211,7 @@
             size_hint: None, None
             width: '300sp'
             height: '70sp'
-            pos_hint: {'center_x': 0.5, 'center_y': 0.6}  
+            pos_hint: {'center_x': 0.5, 'center_y': 0.4}  
             on_press: root.set_difficulty(2)
             background_color: 0, 0, 0, 0
             canvas.before:
@@ -255,7 +255,7 @@
             size_hint: None, None
             width: '300sp'
             height: '70sp'
-            pos_hint: {'center_x': 0.5, 'center_y': 0.4}
+            pos_hint: {'center_x': 0.5, 'center_y': 0.6}
             on_press: root.set_difficulty(0)
             background_color: 0, 0, 0, 0
             canvas.before:
@@ -270,7 +270,7 @@
                     width: 3
                     rectangle: (self.x, self.y, self.width, self.height)
 
-<Customisation>:
+<CustomisationScreen>:
     FloatLayout:
         canvas.before:
             Color:
@@ -413,11 +413,11 @@
                     width: 3
                     rectangle: (self.x, self.y, self.width, self.height)
         Label:
-            text: 'Easy Leaderboard'
+            text: 'Easy Leaderboard:'
             font_name: 'Assets/CourierPrime-Regular.ttf'
             font_size: '30sp'
             color: 95/255, 29/255, 120/255, 1
-            pos_hint: {'center_x': 0.44, 'center_y': 0.92}  
+            pos_hint: {'center_x': 0.42, 'center_y': 0.92}  
         Label:
             text: root.easy_text
             font_name: 'Assets/CourierPrime-Regular.ttf'
@@ -425,11 +425,11 @@
             color: 95/255, 29/255, 120/255, 1
             pos_hint: {'center_x': 0.2, 'center_y': 0.8} 
         Label:
-            text: 'Medium Leaderboard'
+            text: 'Medium Leaderboard:'
             font_name: 'Assets/CourierPrime-Regular.ttf'
             font_size: '30sp'
             color: 95/255, 29/255, 120/255, 1
-            pos_hint: {'center_x': 0.47, 'center_y': 0.67} 
+            pos_hint: {'center_x': 0.46, 'center_y': 0.67} 
         Label:
             text: root.medium_text
             font_name: 'Assets/CourierPrime-Regular.ttf'
@@ -437,11 +437,11 @@
             color: 95/255, 29/255, 120/255, 1
             pos_hint: {'center_x': 0.2, 'center_y': 0.55} 
         Label:
-            text: 'Hard Leaderboard'
+            text: 'Hard Leaderboard:'
             font_name: 'Assets/CourierPrime-Regular.ttf'
             font_size: '30sp'
             color: 95/255, 29/255, 120/255, 1
-            pos_hint: {'center_x': 0.44, 'center_y': 0.42} 
+            pos_hint: {'center_x': 0.42, 'center_y': 0.42} 
         Label:
             text: root.hard_text
             font_name: 'Assets/CourierPrime-Regular.ttf'
@@ -449,7 +449,7 @@
             color: 95/255, 29/255, 120/255, 1
             pos_hint: {'center_x': 0.2, 'center_y': 0.3} 
 
-<GamePlay>:
+<GamePlayScreen>:
     FloatLayout:
         canvas.before:
             Color:
@@ -498,7 +498,7 @@
                     rectangle: (self.x, self.y, self.width, self.height)
 
         Label:
-            text: 'score: ' + root.score
+            text: 'Score: ' + root.score
             font_name: 'Assets/CourierPrime-Regular.ttf'
             font_size: '30sp'
             color: root.line_colour
@@ -507,6 +507,15 @@
             height: '70sp'
             pos_hint: {'center_x': 0.2, 'center_y': 0.05}  
 
+        Label: 
+            text: 'GAME OVER!'
+            font_name: 'Assets/CourierPrime-Regular.ttf'
+            font_size: '70sp'
+            color: root.game_over_color
+            size_hint: None, None
+            width: '300sp'
+            height: '70sp'
+            pos_hint: {'center_x': 0.5, 'center_y': 0.5}   
 
 <Enemies>:
     canvas:

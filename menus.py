@@ -2,7 +2,6 @@ from kivy.uix.floatlayout import FloatLayout
 from kivy.properties import ListProperty, StringProperty
 from difficulty import Difficulty
 
-# todo: load all of this from files
 UNSELECTED_COLOUR = [151/255, 104/255, 196/255, 1]
 SELECTED_COLOUR = [136/255, 83/255, 172/255, 1]
 
@@ -65,7 +64,6 @@ THEME_UNLOCK_MAP = {
     'Green': 40, 
     'Outer Space': 50
 }
-
 SKIN_UNLOCK_MAP = {
     'Pink': 0,
     'Blue': 10, 
@@ -81,14 +79,13 @@ class BaseMenu(FloatLayout):
         self.screen_manager = screen_manager
         self.transition_state = transition_state
 
-# todo: change all names to add screen (not in quotes only in class)
-class MainMenu(BaseMenu):
+class MainMenuScreen(BaseMenu):
     pass
 
-class Customisation(BaseMenu):
+class CustomisationScreen(BaseMenu):
     score_text = StringProperty('Points: 0')
-    theme_options = ListProperty(['monkey'])
-    skin_options = ListProperty(['monkey'])
+    theme_options = ListProperty([''])
+    skin_options = ListProperty([''])
 
     def __init__(self, screen_manager, transition_state, gameplay_screen, leaderboard, **kwargs):
         super().__init__(screen_manager, transition_state, **kwargs)
@@ -96,7 +93,7 @@ class Customisation(BaseMenu):
         self.leaderboard = leaderboard
 
     def update_options(self):
-        self.theme_options.append('madness')
+        self.theme_options.append('')
         self.theme_options = [theme for theme, required_score in THEME_UNLOCK_MAP.items() if self.leaderboard.cumulative_score >= required_score]
         self.skin_options = [skin for skin, required_score in SKIN_UNLOCK_MAP.items() if self.leaderboard.cumulative_score >= required_score]
 
@@ -112,13 +109,14 @@ class Customisation(BaseMenu):
     def update_score(self):
         self.score_text = "Points: " + str(self.leaderboard.cumulative_score)
 
-class GamePlay(BaseMenu):
+class GamePlayScreen(BaseMenu):
     background_colour = ListProperty(DEFAULT_BACKGROUND)
     skin_colour = ListProperty(DEFAULT_SKIN)
     button_colour = ListProperty(DEFAULT_BUTTON)
     line_colour = ListProperty(DEFAULT_LINE)
     character_line_colour = ListProperty(DEFAULT_LINE)
     score = StringProperty('0')
+    game_over_color = ListProperty([0, 0, 0, 0])
 
     def update_score(self, score):
         self.score = str(score)
@@ -126,10 +124,10 @@ class GamePlay(BaseMenu):
     def reset_score(self):
         self.score = '0'
 
-class Rules(BaseMenu):
+class RulesScreen(BaseMenu):
     pass
 
-class Settings(BaseMenu):
+class SettingsScreen(BaseMenu):
     easy_color = ListProperty(UNSELECTED_COLOUR)
     medium_color = ListProperty(SELECTED_COLOUR)
     hard_color = ListProperty(UNSELECTED_COLOUR)
@@ -160,7 +158,6 @@ class Settings(BaseMenu):
 
 
 class LeaderboardScreen(BaseMenu):
-    # todo: make a list?
     easy_text = StringProperty("test")
     medium_text = StringProperty("test")
     hard_text = StringProperty("test")
@@ -182,3 +179,7 @@ class LeaderboardScreen(BaseMenu):
             if not i == (len(leaderboard) - 1):
                 text += "\n"
         return text
+    
+
+
+   
